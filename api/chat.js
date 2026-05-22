@@ -7,7 +7,6 @@ const client = new OpenAI({
 
 export default async function handler(req, res) {
 
-  // CORS
   res.setHeader(
     "Access-Control-Allow-Origin",
     "*"
@@ -29,7 +28,7 @@ export default async function handler(req, res) {
 
   if (req.method !== "POST") {
     return res.status(405).json({
-      error: "Method not allowed ritesh",
+      error: "Method not allowed",
     });
   }
 
@@ -37,31 +36,14 @@ export default async function handler(req, res) {
 
     const { message } = req.body;
 
-    if (!message) {
-      return res.status(400).json({
-        error: "Message required",
-      });
-    }
-
     const completion =
     await client.chat.completions.create({
-      model: "deepseek/deepseek-chat-v3-0324:free",
+      model: "openrouter/free",
       messages: [
         {
           role: "system",
-          content: `
-          You are Shopify AI assistant.
-
-          Rules:
-          - Reply professionally
-          - Reply shortly
-          - Reply in Hindi or English according to customer language
-
-          Store Information:
-          - Delivery: 3-7 days
-          - Return: 7 days return
-          - Support Email: support@mystore.com
-          `
+          content:
+          "You are Shopify AI assistant.",
         },
         {
           role: "user",
