@@ -6,9 +6,29 @@ const client = new OpenAI({
 
 export default async function handler(req, res) {
 
+  // CORS
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "*"
+  );
+
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "POST, OPTIONS"
+  );
+
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type"
+  );
+
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
   if (req.method !== "POST") {
     return res.status(405).json({
-      error: "Method not allowed",
+      error: "Method not allowed ritesh",
     });
   }
 
@@ -29,17 +49,17 @@ export default async function handler(req, res) {
         {
           role: "system",
           content: `
-          You are a Shopify AI chatbot.
+          You are Shopify AI assistant.
 
           Rules:
-          - Reply professionally.
-          - Reply shortly.
-          - Reply in Hindi or English according to user language.
+          - Reply professionally
+          - Reply shortly
+          - Reply in Hindi or English according to customer language
 
-          Store Info:
+          Store Information:
           - Delivery: 3-7 days
-          - Return: 7 days
-          - Support: support@mystore.com
+          - Return: 7 days return
+          - Support Email: support@mystore.com
           `
         },
         {
@@ -51,7 +71,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       reply:
-        completion.choices[0].message.content,
+      completion.choices[0].message.content,
     });
 
   } catch (error) {
