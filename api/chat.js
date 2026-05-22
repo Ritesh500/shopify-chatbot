@@ -1,7 +1,8 @@
 import OpenAI from "openai";
 
 const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: "https://openrouter.ai/api/v1",
+  apiKey: process.env.OPENROUTER_API_KEY,
 });
 
 export default async function handler(req, res) {
@@ -44,7 +45,7 @@ export default async function handler(req, res) {
 
     const completion =
     await client.chat.completions.create({
-      model: "gpt-4.1-mini",
+      model: "deepseek/deepseek-chat-v3-0324:free",
       messages: [
         {
           role: "system",
